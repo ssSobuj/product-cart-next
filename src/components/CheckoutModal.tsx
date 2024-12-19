@@ -2,17 +2,17 @@
 import React from "react";
 
 interface CheckoutModalProps {
-  isOpen: boolean; // Controls whether the modal is visible
-  onClose: () => void; // Function to close the modal
   cart: {
     id: string;
     name: string;
-    color: string;
+    color: string; // Make sure color is required
     size: string;
     quantity: number;
     price: number;
     image: string;
-  }[]; // Array of cart items
+  }[];
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const CheckoutModal: React.FC<CheckoutModalProps> = ({
@@ -29,14 +29,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-8 w-[800px] max-h-[90vh] overflow-y-auto relative">
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-lg font-bold"
-        >
-          &times;
-        </button>
-
         <h2 className="text-3xl font-bold text-[#364A63] mb-6">Your Cart</h2>
 
         {/* Headers */}

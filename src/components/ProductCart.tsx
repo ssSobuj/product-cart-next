@@ -2,54 +2,66 @@
 import React, { useState } from "react";
 import CheckoutModal from "./CheckoutModal";
 
+type CartItem = {
+  id: string;
+  name: string;
+  color: string;
+  size: string;
+  quantity: number;
+  price: number;
+  image: string;
+};
+
+const productDetails = {
+  name: "Classy Modern Smart Watch",
+  id: "product-001",
+  defaultImage: "/product-images/purple.png",
+  images: [
+    { color: "purple", image: "/product-images/purple.png" },
+    { color: "blue", image: "/product-images/blue.png" },
+    { color: "green", image: "/product-images/green.png" },
+    { color: "black", image: "/product-images/black.png" },
+  ],
+  colors: [
+    { name: "purple", colorCode: "#816BFF" },
+    { name: "green", colorCode: "#1FCEC9" },
+    { name: "blue", colorCode: "#4B97D3" },
+    { name: "black", colorCode: "#3B4747" },
+  ],
+  stock: 10,
+  ratings: 2.5,
+  reviews: 2,
+  productDescription:
+    "I must explain to you how all this mistaken idea of denoun cing ple praising pain was born and I will give you a complete account of the system, and expound the actual teaching.",
+  productType: "Watch",
+  modelNumber: "Forerunner 290XT",
+  isFavorite: false,
+  defaultColor: "purple",
+  defaultSize: "M",
+  defaultPrice: 99,
+  discountPrice: 79,
+  priceBySize: {
+    S: 69,
+    M: 79,
+    L: 89,
+    XL: 99,
+  },
+};
 const ProductCart: React.FC = () => {
-  const [cart, setCart] = useState<any[]>([]); // Store cart items
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedColor, setSelectedColor] = useState("purple");
-  const [selectedSize, setSelectedSize] = useState("S");
-  const [selectedPrice, setSelectedPrice] = useState(69);
+  const [selectedColor, setSelectedColor] = useState(
+    productDetails.defaultColor
+  );
+  const [selectedSize, setSelectedSize] = useState(productDetails.defaultSize);
+  const [selectedPrice, setSelectedPrice] = useState(
+    productDetails.discountPrice
+  );
   const [selectedImage, setSelectedImage] = useState(
-    "/product-images/purple.png"
+    productDetails.defaultImage
   );
   const [cartQuantity, setCartQuantity] = useState(1);
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-
-  // Dummy data for the product
-  const productDetails = {
-    name: "Classy Modern Smart Watch",
-    id: "product-001",
-    defaultImage: "/product-images/purple.png",
-    images: [
-      { color: "purple", image: "/product-images/purple.png" },
-      { color: "blue", image: "/product-images/blue.png" },
-      { color: "green", image: "/product-images/green.png" },
-      { color: "black", image: "/product-images/black.png" },
-    ],
-    colors: [
-      { name: "purple", colorCode: "#816BFF" },
-      { name: "green", colorCode: "#1FCEC9" },
-      { name: "blue", colorCode: "#4B97D3" },
-      { name: "black", colorCode: "#3B4747" },
-    ],
-    stock: 10,
-    ratings: 2.5,
-    reviews: 2,
-    productDescription:
-      "I must explain to you how all this mistaken idea of denoun cing ple praising pain was born and I will give you a complete account of the system, and expound the actual teaching.",
-    productType: "Watch",
-    modelNumber: "Forerunner 290XT",
-    isFavorite: false,
-    defaultColor: "purple",
-    defaultSize: "M",
-    defaultPrice: 99,
-    discountPrice: 79,
-    priceBySize: {
-      S: 69,
-      M: 79,
-      L: 89,
-      XL: 99,
-    },
-  };
 
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
@@ -67,7 +79,7 @@ const ProductCart: React.FC = () => {
       name: productDetails?.name,
       id: productDetails?.id,
       image: selectedImage,
-      Color: selectedColor,
+      color: selectedColor,
       size: selectedSize,
       price: selectedPrice,
       quantity: cartQuantity,
@@ -75,7 +87,7 @@ const ProductCart: React.FC = () => {
 
     const existingItemIndex = cart.findIndex(
       (cartItem) =>
-        cartItem.Color === selectedColor && cartItem.size === selectedSize
+        cartItem.color === selectedColor && cartItem.size === selectedSize
     );
 
     if (existingItemIndex >= 0) {
@@ -94,20 +106,20 @@ const ProductCart: React.FC = () => {
 
   return (
     <>
-      <div className="bg-[#ffffff] min-h-screen flex items-center justify-center px-[10rem] md:px-[18.75rem] md:py-30 relative">
-        <div className="rounded-lg w-full flex flex-col md:flex-row gap-x-[3.75rem] py-10">
+      <div className=" min-h-screen flex items-center justify-center px-[2rem] md:px-[4rem] lg:px-[9rem] xl:px-[12rem] 2xl:px-[18.75rem] md:py-30 relative">
+        <div className="rounded-lg w-full flex flex-col xl:flex-row gap-8 gap-x-[3.75rem] py-10">
           {/* Left side - Image */}
-          <div className="md:w-1/2 w-full rounded-lg flex items-center justify-center">
+          <div className="xl:w-1/2 w-full rounded-lg flex  xl:justify-center">
             <img
               id={`${productDetails.id}-product-image`}
               src={selectedImage}
               alt={productDetails.name}
-              className="w-full h-auto md:object-contain rounded max-h-[45.0625rem] max-w-[39.375rem]"
+              className="w-full h-auto md:object-contain rounded  max-h-[45.0625rem] max-w-[39.375rem]"
             />
           </div>
 
           {/* Right side - Product Details */}
-          <div className="md:w-1/2 w-full mt-5 md:mt-0 flex flex-col justify-center">
+          <div className="xl:w-1/2 w-full mt-5 md:mt-0 flex flex-col justify-center">
             <h1 className="text-[2.5rem] leading-[2.75rem] font-bold text-[#364A63] mb-3">
               {productDetails.name}
             </h1>
